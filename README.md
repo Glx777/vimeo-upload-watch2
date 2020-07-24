@@ -1,1 +1,1 @@
-# vimeo-upload-watch2
+# vimeo-upload-watch
