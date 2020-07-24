@@ -33,6 +33,9 @@
   "scripts": {
     "start:web": "yarn workspace @vimeo/web dev",
     "start:api": "yarn workspace @vimeo/api start:dev",
-    "start": "concurrently \"yarn start:web \" \"yarn start:api \""
+    "start:web-prod": "yarn workspace @vimeo/web start",
+    "start:api-prod": "yarn workspace @vimeo/api start:prod",
+    "start": "concurrently \"yarn start:web \" \"yarn start:api \"",
+    "start:prod": "concurrently \"yarn start:web-prod \" \"yarn start:api-prod \""
   }
 }

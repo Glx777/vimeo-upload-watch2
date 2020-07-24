@@ -36,11 +36,11 @@ export class AppService {
     input: UploadVideoInput,
   ): Promise<string> {
     const absolutePath = path.resolve("./uploads/")
-
+    console.log(absolutePath, absolutePath + filename)
     const uploadVideo = (): Promise<string> =>
       new Promise((resolve, reject): void => {
         client.upload(
-          absolutePath,
+          `${absolutePath}/${filename}`,
           {
             name: input.name,
             description: input.description,
@@ -60,7 +60,7 @@ export class AppService {
         )
       })
 
-    return absolutePath + filename
+    return await uploadVideo()
   }
 
   async getVideosAsync(): Promise<any> {

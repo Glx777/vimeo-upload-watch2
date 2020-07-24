@@ -1,4 +1,4 @@
-FROM node:14.5.0
+FROM node:14.5.0 as builder
 
 WORKDIR /usr/src/app
 
@@ -12,17 +12,24 @@ WORKDIR /usr/src/app/packages/api/
 
 RUN yarn build
 
-ENV NODE_ENV production
-
 WORKDIR /usr/src/app/packages/web/
 
 RUN yarn build
 
-ENV NODE_ENV production
+FROM node:14.5.0
+
+WORKDIR /usr/src/app
+
+COPY package.json yarn.lock ./
+
+COPY --from=builder /usr/src/app/packages/api/package.json /usr/src/app/packages/api/package.json
+COPY --from=builder /usr/src/app/packages/api/dist /usr/src/app/packages/api/dist
+COPY --from=builder /usr/src/app/packages/web/package.json /usr/src/app/packages/web/package.json
+COPY --from=builder /usr/src/app/packages/web/.next /usr/src/app/packages/web/.next
+
+RUN yarn install --production
 
 EXPOSE 3000
 EXPOSE 5000
 
-WORKDIR /usr/src/app
-
-CMD ["yarn", "start"]
+CMD ["yarn", "start:prod"]

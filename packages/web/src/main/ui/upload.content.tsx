@@ -1,21 +1,31 @@
-import React, { ReactElement, useState, ChangeEvent } from "react"
-import { Input, Button, Box } from "@material-ui/core"
+/* eslint-disable unicorn/no-useless-undefined */
+import React, { ReactElement, ChangeEvent } from "react"
+import { Input, Button, Box, Typography } from "@material-ui/core"
 import styled from "styled-components"
+import { FormikProps, Form, ErrorMessage } from "formik"
+
+import { FormInput } from "./upload.content.form"
 
 const VIDEO_FORMAT = "video/*"
-const api_url = "http://localhost:5000/upload"
 
-const Root = styled(Box)`
+const Root = styled(Form)`
   display: flex;
   align-items: center;
   width: fit-content;
   margin: 0 auto;
 `
 
+const StyledBox = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  min-height: 66px;
+  max-height: 66px;
+`
+
 const StyledInput = styled(Input)`
   font-size: 30px !important;
   color: #fff !important;
-  width: 370px;
+  width: 400px;
   margin: 0 20px 0 0;
 `
 
@@ -26,45 +36,35 @@ const StyledButton = styled(Button)`
   padding: 15px 25px !important;
 `
 
-export const UploadContent = (): ReactElement => {
-  const [file, setFile] = useState<File>()
+const Text = styled(Typography)`
+  color: red;
+`
 
-  const uploadImageAsync = async (): Promise<void> => {
-    try {
-      const formData = new FormData()
-      formData.append("video", file, "123")
-
-      const response = await fetch(api_url, {
-        method: "POST",
-        body: formData,
-      })
-
-      const b = await response.json()
-
-      // eslint-disable-next-line no-console
-      console.log(b, response)
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
-    }
-  }
-
+export const UploadContentView = ({
+  setFieldValue,
+}: FormikProps<FormInput>): ReactElement => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const selectedFile = event.target.files[0]
-    setFile(selectedFile)
+    const selectedFile: File | undefined = event.target.files[0]
+    setFieldValue("video", selectedFile || "")
   }
 
   return (
     <Root>
-      <StyledInput
-        type="file"
-        inputProps={{
-          accept: VIDEO_FORMAT,
-        }}
-        disableUnderline
-        onChange={handleChange}
-      />
-      <StyledButton onClick={uploadImageAsync} variant="outlined">
+      <StyledBox>
+        <StyledInput
+          type="file"
+          inputProps={{
+            accept: VIDEO_FORMAT,
+          }}
+          disableUnderline
+          name="video"
+          onChange={handleChange}
+        />
+        <ErrorMessage name="video">
+          {(message: string): ReactElement => <Text>{message}</Text>}
+        </ErrorMessage>
+      </StyledBox>
+      <StyledButton type="submit" variant="outlined">
         Upload
       </StyledButton>
     </Root>
