@@ -1,0 +1,38 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "3.7.0",
+    "@typescript-eslint/parser": "3.7.0",
+    "eslint": "7.5.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-filenames": "1.3.2",
+    "eslint-plugin-jest": "23.18.0",
+    "eslint-plugin-lodash": "7.1.0",
+    "eslint-plugin-no-secrets": "0.6.8",
+    "eslint-plugin-optimize-regex": "1.2.0",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-react": "7.20.3",
+    "eslint-plugin-react-hooks": "4.0.8",
+    "eslint-plugin-security": "1.4.0",
+    "eslint-plugin-sql": "1.1.1",
+    "eslint-plugin-unicorn": "21.0.0",
+    "prettier": "2.0.5",
+    "typescript": "3.9.7"
+  },
+  "dependencies": {
+    "concurrently": "5.2.0"
+  },
+  "scripts": {
+    "start:web": "yarn workspace @vimeo/web dev",
+    "start:api": "yarn workspace @vimeo/api start:dev",
+    "start": "concurrently \"yarn start:web \" \"yarn start:api \""
+  }
+}
