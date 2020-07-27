@@ -14,15 +14,11 @@
 
   2. Install dependencies
 
-- ```bash
-  yarn install
-  ```
+    - `yarn install`
 
   3. Start project
 
-- ```bash
-  yarn start
-  ```
+    - `yarn start`
 
 ## How to dockerize
 
