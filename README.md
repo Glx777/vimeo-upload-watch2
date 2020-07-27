@@ -2,7 +2,7 @@
   <h1>Vimeo-upload-watch</h1>
 </div>
 
-## How to run
+## How to start
 
   1. Clone and install dependencies
 
@@ -14,11 +14,15 @@
 
   2. Install dependencies
 
-- `yarn install`
+- ```bash
+  yarn install
+  ```
 
   3. Start project
 
-- `yarn start`
+- ```bash
+  yarn start
+  ```
 
 ## How to dockerize
 
