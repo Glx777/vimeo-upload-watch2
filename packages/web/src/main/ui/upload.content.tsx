@@ -4,6 +4,8 @@ import { Input, Button, Box, Typography } from "@material-ui/core"
 import styled from "styled-components"
 import { FormikProps, Form, ErrorMessage } from "formik"
 
+import { t } from "../../i18n/i18n"
+
 import { FormInput } from "./upload.content.form"
 
 const VIDEO_FORMAT = "video/*"
@@ -61,11 +63,11 @@ export const UploadContentView = ({
           onChange={handleChange}
         />
         <ErrorMessage name="video">
-          {(message: string): ReactElement => <Text>{message}</Text>}
+          {(message: string): ReactElement => <Text>{t(message)}</Text>}
         </ErrorMessage>
       </StyledBox>
       <StyledButton type="submit" variant="outlined">
-        Upload
+        {t("mainPage.watch")}
       </StyledButton>
     </Root>
   )

@@ -8,6 +8,9 @@ import {
   AppContext,
   AppInitialProps,
 } from "next/app"
+import { RawIntlProvider } from "react-intl"
+
+import { intl } from "../src/i18n/i18n"
 
 export const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -22,6 +25,10 @@ export const GlobalStyle = createGlobalStyle`
 `
 
 class App extends NextApp<AppProps> {
+  state = {
+    locale: "ru",
+  }
+
   // eslint-disable-next-line no-restricted-syntax
   static async getInitialProps({
     Component,
@@ -36,13 +43,22 @@ class App extends NextApp<AppProps> {
     return pageProps
   }
 
+  componentDidMount(): void {
+    this.setState({
+      locale: window.navigator.language || "en",
+    })
+  }
+
   render(): ReactElement<AppProps> {
     const { Component, pageProps } = this.props
+    const { locale } = this.state
 
     return (
       <Fragment>
-        <Component {...pageProps} />
-        <GlobalStyle />
+        <RawIntlProvider value={intl(locale)}>
+          <Component {...pageProps} />
+          <GlobalStyle />
+        </RawIntlProvider>
       </Fragment>
     )
   }

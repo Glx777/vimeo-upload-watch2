@@ -10,11 +10,14 @@
   "dependencies": {
     "@material-ui/core": "4.11.0",
     "@material-ui/lab": "4.0.0-alpha.56",
+    "@types/lodash": "4.14.158",
     "@u-wave/react-vimeo": "0.9.0",
     "formik": "2.1.5",
+    "lodash": "4.17.19",
     "next": "9.4.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-intl": "5.4.2",
     "styled-components": "5.1.1",
     "styled-normalize": "8.0.7",
     "yup": "0.29.1"
