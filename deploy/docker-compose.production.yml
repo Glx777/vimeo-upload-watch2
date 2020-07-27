@@ -1,11 +1,13 @@
 version: "3.8"
 
 services:
-  api:
+  app:
     image: vimeo-upload-watch:latest
     build:
       context: ../
-      dockerfile: packages/api/Dockerfile
+      dockerfile: Dockerfile
+  api:
+    image: vimeo-upload-watch:latest
     container_name: api
     ports:
       - 5000:5000

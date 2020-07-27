@@ -37,7 +37,7 @@ const StyledButton = styled(Button)`
 `
 
 const Text = styled(Typography)`
-  color: red;
+  color: #ff1493;
 `
 
 export const UploadContentView = ({
