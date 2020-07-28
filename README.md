@@ -16,7 +16,7 @@
 
 - Run `yarn install`
 
-  3. Start project
+3. Start project
 
 - Run `yarn start`
 
