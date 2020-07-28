@@ -4,12 +4,11 @@
 
 ## How to start
 
-  1. Clone and install dependencies
+  1. Clone repository
 
   ```bash
   git clone git@gitlab.com:BraveDevelopers/transportation.git
   cd transportation
-  yarn install
   ```
 
   2. Install dependencies
