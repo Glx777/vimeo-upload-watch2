@@ -1,16 +1,15 @@
-/* eslint-disable filenames/match-regex */
+/* eslint-disable filenames/match-regex, unicorn/no-reduce */
 import React, { Fragment, ReactElement } from "react"
 import { normalize } from "styled-normalize"
 import { createGlobalStyle } from "styled-components"
-import {
-  default as NextApp,
-  AppProps,
-  AppContext,
-  AppInitialProps,
-} from "next/app"
-import { RawIntlProvider } from "react-intl"
+import { default as NextApp, AppProps, AppInitialProps } from "next/app"
+import { IntlProvider } from "react-intl"
+import isString from "lodash/isString"
 
-import { intl } from "../src/i18n/i18n"
+type Props = AppProps & {
+  locale: string
+  messages: any
+}
 
 export const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -24,41 +23,59 @@ export const GlobalStyle = createGlobalStyle`
   }
 `
 
-class App extends NextApp<AppProps> {
-  state = {
-    locale: "ru",
-  }
+const flattenMessages = (
+  nestedMessages: any,
+  prefix = "",
+): Record<string, string> =>
+  Object.keys(nestedMessages).reduce(
+    (
+      accumulator: Record<string, string>,
+      key: string,
+    ): Record<string, string> => {
+      const value = nestedMessages[`${key}`]
+      const prefixedKey = prefix ? `${prefix}.${key}` : key
 
+      if (isString(value)) {
+        accumulator[`${prefixedKey}`] = value
+      } else {
+        Object.assign(accumulator, flattenMessages(value, prefixedKey))
+      }
+
+      return accumulator
+    },
+    {},
+  )
+
+class App extends NextApp<Props> {
   // eslint-disable-next-line no-restricted-syntax
   static async getInitialProps({
     Component,
     ctx,
-  }: AppContext): Promise<AppInitialProps & any> {
+  }: any): Promise<AppInitialProps & any> {
     let pageProps = {}
+
+    const { locale, messages } = ctx.res
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    return pageProps
+    return { locale, messages, ...pageProps }
   }
 
-  componentDidMount(): void {
-    this.setState({
-      locale: window.navigator.language || "en",
-    })
-  }
-
-  render(): ReactElement<AppProps> {
-    const { Component, pageProps } = this.props
-    const { locale } = this.state
+  render(): ReactElement<Props> {
+    const { Component, locale, messages, pageProps } = this.props
 
     return (
       <Fragment>
-        <RawIntlProvider value={intl(locale)}>
+        <IntlProvider
+          defaultLocale={locale}
+          locale={locale}
+          messages={flattenMessages(messages)}
+        >
           <Component {...pageProps} />
           <GlobalStyle />
-        </RawIntlProvider>
+        </IntlProvider>
       </Fragment>
     )
   }

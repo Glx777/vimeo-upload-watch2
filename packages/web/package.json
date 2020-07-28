@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "start:dev": "yarn build:server && nodemon",
+    "build": "next build && yarn build:server",
+    "start": "node dist/server.js",
+    "build:server": "tsc -p tsconfig.server.json"
   },
   "dependencies": {
     "@material-ui/core": "4.11.0",
@@ -13,6 +14,7 @@
     "@types/lodash": "4.14.158",
     "@u-wave/react-vimeo": "0.9.0",
     "formik": "2.1.5",
+    "js-cookie": "2.2.1",
     "lodash": "4.17.19",
     "next": "9.4.4",
     "react": "16.13.1",
@@ -26,6 +28,8 @@
     "@types/node": "14.0.24",
     "@types/react": "16.9.43",
     "@types/yup": "0.29.3",
+    "babel-plugin-styled-components": "1.10.7",
+    "nodemon": "2.0.4",
     "typescript": "3.9.7"
   }
 }

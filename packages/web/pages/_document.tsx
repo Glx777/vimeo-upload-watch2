@@ -1,5 +1,5 @@
 /* eslint-disable filenames/match-regex */
-import React, { Fragment, ReactElement } from "react"
+import React, { ReactElement, Fragment } from "react"
 import {
   Html,
   Head,
@@ -46,7 +46,7 @@ class Document extends NextDocument<DocumentProps> {
     }
   }
 
-  render(): React.ReactElement {
+  render(): ReactElement {
     return (
       <Html>
         <Head>

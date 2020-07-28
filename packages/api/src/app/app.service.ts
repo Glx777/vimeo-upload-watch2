@@ -17,7 +17,7 @@ const getVideos = (): Promise<any> =>
     client.request(
       {
         method: "GET",
-        path: `/users/120035564/videos`,
+        path: `/users/120035564/videos?filter=playable`,
       },
       (error, body): void => {
         if (error) {
@@ -36,7 +36,7 @@ export class AppService {
     input: UploadVideoInput,
   ): Promise<string> {
     const absolutePath = path.resolve("./uploads/")
-    console.log(absolutePath, absolutePath + filename)
+
     const uploadVideo = (): Promise<string> =>
       new Promise((resolve, reject): void => {
         client.upload(

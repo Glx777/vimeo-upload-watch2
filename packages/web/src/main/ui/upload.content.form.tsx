@@ -1,8 +1,9 @@
 /* eslint-disable unicorn/no-null */
 import React, { ReactElement } from "react"
 import { Formik } from "formik"
+import { useIntl } from "react-intl"
 
-import { UploadVideoInputSchema } from "../../validation-schemas/upload-video"
+import { UploadVideoInputSchema } from "src/validation-schemas/upload-video"
 
 import { UploadContentView } from "./upload.content"
 
@@ -16,31 +17,39 @@ const initialValues: FormInput = {
 
 const api_url = "http://localhost:5000/upload"
 
-const handleSubmitAsync = async (values: FormInput): Promise<void> => {
-  try {
-    const formData = new FormData()
+export const UploadContentForm = (): ReactElement => {
+  const intl = useIntl()
 
-    if (values.video) {
-      formData.append("video", values.video)
-    } else {
-      formData.delete("video")
-    }
+  const handleSubmitAsync = async (values: FormInput): Promise<void> => {
+    try {
+      const formData = new FormData()
 
-    await fetch(api_url, {
-      method: "POST",
-      body: formData,
-    })
-  } catch {}
+      if (values.video) {
+        formData.append("video", values.video)
+      } else {
+        formData.delete("video")
+      }
+
+      const response = await fetch(api_url, {
+        method: "POST",
+        body: formData,
+      })
+
+      if (response.status === 201) {
+        alert(intl.formatMessage({ id: "mainPage.successfullyUploaded" }))
+      }
+    } catch {}
+  }
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmitAsync}
+      component={UploadContentView}
+      validateOnBlur={false}
+      validateOnChange={false}
+      enableReinitialize={false}
+      validationSchema={UploadVideoInputSchema}
+    />
+  )
 }
-
-export const UploadContentForm = (): ReactElement => (
-  <Formik
-    initialValues={initialValues}
-    onSubmit={handleSubmitAsync}
-    component={UploadContentView}
-    validateOnBlur={false}
-    validateOnChange={false}
-    enableReinitialize={false}
-    validationSchema={UploadVideoInputSchema}
-  />
-)

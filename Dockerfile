@@ -28,8 +28,16 @@ COPY --from=builder /usr/src/app/packages/api/dist/ packages/api/dist/
 COPY --from=builder /usr/src/app/packages/web/package.json packages/web/package.json
 COPY --from=builder /usr/src/app/packages/web/.next/ packages/web/.next/
 COPY --from=builder /usr/src/app/packages/web/public/ packages/web/public/
+COPY --from=builder /usr/src/app/packages/web/dist/ packages/web/dist/
+COPY --from=builder /usr/src/app/packages/web/lang/ packages/web/lang/
 
 RUN yarn install --production
+
+WORKDIR /usr/src/app/packages/web
+
+ENV NODE_ENV=production
+
+WORKDIR /usr/src/app
 
 EXPOSE 3000
 EXPOSE 5000

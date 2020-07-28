@@ -3,8 +3,7 @@ import React, { ReactElement, ChangeEvent } from "react"
 import { Input, Button, Box, Typography } from "@material-ui/core"
 import styled from "styled-components"
 import { FormikProps, Form, ErrorMessage } from "formik"
-
-import { t } from "../../i18n/i18n"
+import { useIntl } from "react-intl"
 
 import { FormInput } from "./upload.content.form"
 
@@ -39,12 +38,14 @@ const StyledButton = styled(Button)`
 `
 
 const Text = styled(Typography)`
-  color: #ff1493;
+  color: #8a2be2;
 `
 
 export const UploadContentView = ({
   setFieldValue,
 }: FormikProps<FormInput>): ReactElement => {
+  const intl = useIntl()
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const selectedFile: File | undefined = event.target.files[0]
     setFieldValue("video", selectedFile || "")
@@ -62,12 +63,16 @@ export const UploadContentView = ({
           name="video"
           onChange={handleChange}
         />
+
         <ErrorMessage name="video">
-          {(message: string): ReactElement => <Text>{t(message)}</Text>}
+          {(message: string): ReactElement => (
+            <Text>{intl.formatMessage({ id: message })}</Text>
+          )}
         </ErrorMessage>
       </StyledBox>
+
       <StyledButton type="submit" variant="outlined">
-        {t("mainPage.watch")}
+        {intl.formatMessage({ id: "mainPage.upload" })}
       </StyledButton>
     </Root>
   )

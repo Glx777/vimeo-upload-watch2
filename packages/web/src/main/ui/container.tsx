@@ -1,10 +1,12 @@
 import React, { ReactElement, useState, ChangeEvent } from "react"
+import { useIntl } from "react-intl"
 import { AppBar, Tabs, Tab } from "@material-ui/core"
 import { TabContext, TabPanel } from "@material-ui/lab"
 
 import { tabs } from "./tabs"
 
 export const Container = (): ReactElement => {
+  const intl = useIntl()
   const [selectedTab, setSelectedTab] = useState(0)
 
   const handleChange = (_event: ChangeEvent, value: number) => {
@@ -17,11 +19,12 @@ export const Container = (): ReactElement => {
         <Tabs value={selectedTab} onChange={handleChange}>
           {tabs.map(
             (tab): ReactElement => (
-              <Tab key={tab.id} label={tab.label} />
+              <Tab key={tab.id} label={intl.formatMessage({ id: tab.label })} />
             ),
           )}
         </Tabs>
       </AppBar>
+
       {tabs.map(
         (tab): ReactElement => (
           <TabPanel key={tab.id} value={tab.value}>

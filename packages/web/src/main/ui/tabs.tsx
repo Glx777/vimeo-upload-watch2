@@ -1,7 +1,5 @@
 import React, { ReactNode } from "react"
 
-import { t } from "../../i18n/i18n"
-
 import { UploadContentForm } from "./upload.content.form"
 import { WatchContent } from "./watch.content"
 
@@ -15,13 +13,13 @@ interface Tab {
 export const tabs: Tab[] = [
   {
     id: 0,
-    label: t("mainPage.upload"),
+    label: "mainPage.upload",
     value: "0",
     children: <UploadContentForm />,
   },
   {
     id: 1,
-    label: t("mainPage.watch"),
+    label: "mainPage.watch",
     value: "1",
     children: <WatchContent />,
   },

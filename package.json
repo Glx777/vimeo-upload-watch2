@@ -31,7 +31,7 @@
     "concurrently": "5.2.0"
   },
   "scripts": {
-    "start:web": "yarn workspace @vimeo/web dev",
+    "start:web": "yarn workspace @vimeo/web start:dev",
     "start:api": "yarn workspace @vimeo/api start:dev",
     "start:web-prod": "yarn workspace @vimeo/web start",
     "start:api-prod": "yarn workspace @vimeo/api start:prod",

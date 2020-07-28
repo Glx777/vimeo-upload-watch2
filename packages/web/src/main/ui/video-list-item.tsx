@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/no-useless-undefined, security/detect-non-literal-fs-filename */
+/* eslint-disable unicorn/no-useless-undefined, security/detect-non-literal-fs-filename, unicorn/no-null */
 import React, { ReactElement, Fragment, SetStateAction, Dispatch } from "react"
 import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core"
 import styled from "styled-components"
@@ -9,7 +9,7 @@ interface Props {
   selectedIndex: number
   enableLoadingVideo: () => void
   videoLink: string
-  videos: any
+  videos: Record<string, any>[]
   setSelectedIndex: Dispatch<SetStateAction<number>>
   setVideoLink: Dispatch<SetStateAction<string | undefined>>
   isLoadingVideo: boolean
@@ -33,7 +33,7 @@ export const VideoListItem = ({
   disableLoadingVideo,
 }: Props): ReactElement => (
   <List component="nav">
-    {videos.data.map(
+    {videos.map(
       (video, index: number): ReactElement => (
         <Fragment key={video.link}>
           <ListItem

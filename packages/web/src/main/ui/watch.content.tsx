@@ -1,34 +1,33 @@
 import React, { ReactElement, useState, useEffect } from "react"
-import { CircularProgress, makeStyles, Box } from "@material-ui/core"
+import { CircularProgress, Box } from "@material-ui/core"
+import styled from "styled-components"
 
-import { useToggle } from "../../hooks/use-toggle"
+import { useToggle } from "src/hooks/use-toggle"
 
 import { VideoListItem } from "./video-list-item"
 
-const useStyles = makeStyles({
-  loaderRoot: {
-    position: "absolute",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  },
-  loader: {
-    color: "#FFD700",
-  },
-})
+const SpinnerContainer = styled(Box)`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+`
+
+const Spinner = styled(CircularProgress)`
+  color: #ffd700 !important;
+`
 
 export const WatchContent = (): ReactElement => {
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const [videoLink, setVideoLink] = useState<string>()
-  const [videos, setVideos] = useState<Record<string, any>>()
+  const [videos, setVideos] = useState<Record<string, any>[]>()
   const [isLoadingVideo, enableLoadingVideo, disableLoadingVideo] = useToggle(
     true,
   )
-  const classes = useStyles()
 
   const getVideosAsync = async (): Promise<void> => {
     try {
@@ -38,7 +37,7 @@ export const WatchContent = (): ReactElement => {
 
       const data = await response.json()
 
-      setVideos(data)
+      setVideos(data.data)
     } catch {}
   }
 
@@ -48,15 +47,14 @@ export const WatchContent = (): ReactElement => {
 
   if (!videos) {
     return (
-      <Box className={classes.loaderRoot}>
-        <CircularProgress className={classes.loader} />
-      </Box>
+      <SpinnerContainer>
+        <Spinner />
+      </SpinnerContainer>
     )
   }
 
   return (
-    !!videos &&
-    videos.data.length > 0 && (
+    videos.length > 0 && (
       <VideoListItem
         selectedIndex={selectedIndex}
         enableLoadingVideo={enableLoadingVideo}

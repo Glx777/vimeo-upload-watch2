@@ -1,0 +1,10 @@
+{
+  "mainPage": {
+    "title": "Vimeo тестовое приложение",
+    "upload": "Загрузить видео",
+    "watch": "Просмотр",
+    "fileIsRequired": "Файл обязателен",
+    "notAVideo": "Файл не является видеом",
+    "successfullyUploaded": "Видео успешно загружено"
+  }
+}
