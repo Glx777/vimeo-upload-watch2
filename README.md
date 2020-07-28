@@ -14,11 +14,11 @@
 
   2. Install dependencies
 
-    - Run yarn install
+    - Run `yarn install`
 
   3. Start project
 
-    - Run yarn start
+    - Run `yarn start`
 
 ## How to dockerize
 
