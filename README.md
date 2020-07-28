@@ -18,6 +18,7 @@
 3. Start project
 
 - Run `yarn start`
+- Open <http://localhost:3000> in your browser
 
 ## How to dockerize
 
